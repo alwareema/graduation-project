@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>حجز فعالية | The Art Yard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+      font-family:'Cairo',sans-serif;
+    }
+
+    body{
+      background: linear-gradient(rgba(63,40,26,0.35), rgba(63,40,26,0.35)),
+                  url('hero.jpg') center/cover no-repeat fixed;
+      min-height:100vh;
+      color:#2f1d13;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    header{
+      background:rgba(255,255,255,0.92);
+      border-bottom:1px solid #e7d7c8;
+      backdrop-filter:blur(6px);
+    }
+
+    .nav{
+      max-width:1200px;
+      margin:auto;
+      padding:14px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+
+    .logo{
+      font-size:20px;
+      font-weight:800;
+      color:#4b2f1f;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    .nav-links a{
+      background:#fff;
+      border:1px solid #dcc8b6;
+      color:#4b2f1f;
+      padding:8px 16px;
+      border-radius:999px;
+      font-weight:700;
+    }
+
+    .hero{
+      max-width:1200px;
+      margin:40px auto 24px;
+      text-align:center;
+      color:#fffaf5;
+      padding:0 20px;
+    }
+
+    .hero h1{
+      font-size:58px;
+      margin-bottom:8px;
+      font-weight:800;
+      text-shadow:0 4px 18px rgba(0,0,0,0.25);
+    }
+
+    .hero p{
+      font-size:28px;
+      max-width:800px;
+      margin:0 auto 22px;
+      text-shadow:0 4px 18px rgba(0,0,0,0.25);
+    }
+
+    .hero .back-home{
+      display:inline-block;
+      background:#8b572a;
+      color:#fff;
+      padding:12px 34px;
+      border-radius:16px;
+      font-weight:800;
+      box-shadow:0 8px 24px rgba(0,0,0,0.16);
+    }
+
+    .top-features{
+      max-width:1000px;
+      margin:0 auto 0;
+      background:rgba(255,241,241,0.85);
+      border-radius:18px 18px 0 0;
+      border:1px solid #eadbcb;
+      border-bottom:none;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      overflow:hidden;
+      box-shadow:0 10px 25px rgba(55,31,18,0.12);
+    }
+
+    .feature{
+      padding:18px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      font-weight:800;
+      color:#5a3822;
+      border-left:1px solid #eadbcb;
+      min-height:72px;
+      background:rgba(255,250,246,0.72);
+    }
+
+    .feature:last-child{
+      border-left:none;
+    }
+
+    .booking-shell{
+      max-width:1000px;
+      margin:0 auto 50px;
+      background:rgba(250,245,239,0.94);
+      border:1px solid #eadbcb;
+      border-radius:0 0 28px 28px;
+      box-shadow:0 18px 45px rgba(55,31,18,0.22);
+      padding:20px;
+    }
+
+    .booking-grid{
+      display:grid;
+      grid-template-columns:1.4fr 0.8fr;
+      gap:28px;
+      align-items:start;
+    }
+
+    .booking-form-card{
+      background:rgba(255,255,255,0.9);
+      border:1px solid #eadbcb;
+      border-radius:24px;
+      padding:18px;
+      box-shadow:0 10px 24px rgba(91,58,34,0.08);
+    }
+
+    .booking-form-card h2{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:20px;
+      color:#3c2417;
+      position:relative;
+    }
+
+    .form-group{ margin-bottom:14px; }
+    .form-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    label{ display:block; margin-bottom:6px; font-weight:700; color:#5a3822; font-size:14px; }
+    input, select{ width:100%; padding:14px 16px; border:1px solid #d9c4b2; border-radius:14px; background:#fffdfb; font-size:15px; outline:none; }
+
+    .submit-btn{
+      width:100%;
+      margin-top:14px;
+      background:linear-gradient(180deg,#9b652f,#7c4b22);
+      color:#fff;
+      border:none;
+      border-radius:16px;
+      padding:16px;
+      font-size:28px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 10px 24px rgba(124,75,34,0.25);
+    }
+
+    .summary-card{
+      background:#fdf5ea;
+      border:1px solid #dbc2aa;
+      border-radius:24px;
+      padding:24px;
+      box-shadow:0 12px 26px rgba(91,58,34,0.10);
+    }
+
+    .summary-line{ display:flex; justify-content:space-between; padding:14px 0; border-bottom:1px solid #e5d4c4; font-size:18px; }
+    .summary-total{ margin:24px 0 10px; background:linear-gradient(180deg,#9b652f,#7c4b22); color:#fff; border-radius:18px; padding:18px; text-align:center; font-size:34px; font-weight:800; }
+
+    .invoice-wrap{ display:none; margin-top:28px; }
+    .invoice{ background:#fff; border-radius:24px; border:1px solid #eadbcb; padding:24px; }
+    table{ width:100%; border-collapse:collapse; margin-top:10px; }
+    th, td{ padding:12px; border-bottom:1px solid #eee3d8; text-align:right; }
+    th{ background:#fcf7f2; color:#5a3822; width:35%; }
+
+    .print-btn{ background:#7c4b22; color:#fff; padding:12px; border-radius:10px; cursor:pointer; border:none; font-weight:bold; }
+    .close-btn{ background:#efe3d6; color:#4b2f1f; padding:12px; border-radius:10px; cursor:pointer; border:none; font-weight:bold; margin-right:10px; }
+
+    @media (max-width: 980px){ .booking-grid{ grid-template-columns:1fr; } .top-features{ grid-template-columns:1fr; } }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="nav">
+      <div class="logo">The art yard</div>
+      <div class="nav-links">
+        <a href="index.html">الرئيسية</a>
+        <a href="artworks.html">الأعمال الفنية</a>
+        <a href="courses.html">الدورات</a>
+        <a href="support.html">تواصل معنا</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <h1>احجز حضورك الفني</h1>
+    <p>احجز مكانك في الفعاليات والمعارض الفنية معنا</p>
+    <a href="index.html" class="back-home">الرئيسية</a>
+  </section>
+
+  <div class="top-features">
+    <div class="feature"><span>150 ر.س للمقعد</span></div>
+    <div class="feature"><span>رسوم ثابتة</span></div>
+    <div class="feature"><span>حجز سريع</span></div>
+  </div>
+
+  <section class="booking-shell">
+    <div class="booking-grid">
+      <div class="booking-form-card">
+        <h2>احجز الآن</h2>
+        <form id="bookingForm" onsubmit="return false;">
+          <div class="form-row">
+            <div class="form-group">
+              <label>اسم العميل</label>
+              <input id="custName" type="text" placeholder="احجز باسمك">
+            </div>
+            <div class="form-group">
+              <label>رقم الجوال</label>
+              <input id="custPhone" type="text" placeholder="05xxxxxxxx">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>اسم الفعالية</label>
+            <select id="eventName" onchange="updateSummary()">
+              <option value="تذاكر زيارة">تذاكر زيارة</option>
+              <option value="عرض أعمال حية">عرض أعمال حية</option>
+              <option value="دورات فخار">دورات فخار</option>
+              <option value="عرض لوحات فنية">عرض لوحات فنية</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>موقع الفعالية</label>
+            <select id="eventLocation">
+              <option value="الرياض - العليا">الرياض - العليا</option>
+              <option value="جدة - الروضة">جدة - الروضة</option>
+            </select>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>عدد المقاعد</label>
+              <input id="seats" type="number" min="1" value="1" oninput="updateSummary()">
+            </div>
+            <div class="form-group">
+              <label>تاريخ ووقت الفعالية</label>
+              <input id="eventDateTime" type="datetime-local">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>طريقة الدفع</label>
+            <select id="payMethod">
+              <option value="كاش">كاش</option>
+              <option value="شبكة">شبكة</option>
+            </select>
+          </div>
+
+          <input id="feePerSeat" type="hidden" value="150">
+          <button class="submit-btn" type="button" onclick="confirmBooking()">تأكيد الحجز</button>
+        </form>
+      </div>
+
+      <aside class="summary-card">
+        <h3>ملخص الحجز</h3>
+        <div class="summary-line"><span>الفعالية</span><strong id="sEvent">تذاكر زيارة</strong></div>
+        <div class="summary-line"><span>عدد المقاعد</span><strong id="sSeats">1</strong></div>
+        <div class="summary-line"><span>سعر المقعد</span><strong id="sFee">150 ر.س</strong></div>
+        <div class="summary-total" id="sTotal">150 ر.س</div>
+      </aside>
+    </div>
+
+    <div class="invoice-wrap" id="invoiceWrap">
+      <div class="invoice">
+        <h2>فاتورة حجز</h2>
+        <p id="invNo" style="font-weight:bold;"></p>
+        <p id="invDate"></p>
+        <table>
+          <tr><th>العميل</th><td id="iName"></td></tr>
+          <tr><th>الفعالية</th><td id="iEvent"></td></tr>
+          <tr><th>الموقع</th><td id="iLoc"></td></tr>
+          <tr><th>الوقت</th><td id="iDT"></td></tr>
+          <tr><th>المقاعد</th><td id="iSeats"></td></tr>
+          <tr><th>الإجمالي</th><td id="iTotal" style="font-weight:bold;"></td></tr>
+        </table>
+        <div style="margin-top:20px;">
+          <button class="print-btn" onclick="window.print()">طباعة الفاتورة</button>
+          <button class="close-btn" onclick="hideInvoice()">إغلاق</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function updateSummary(){
+      const eventName = document.getElementById('eventName').value;
+      const seats = parseInt(document.getElementById('seats').value || "1", 10);
+      const fee = 150;
+      const total = seats * fee;
+
+      document.getElementById('sEvent').textContent = eventName;
+      document.getElementById('sSeats').textContent = seats;
+      document.getElementById('sTotal').textContent = total + " ر.س";
+    }
+
+    function confirmBooking(){
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const dt = document.getElementById('eventDateTime').value;
+
+      if(!name || !phone || !dt){
+        alert("يرجى إكمال البيانات المطلوبة");
+        return;
+      }
+
+      const eventName = document.getElementById('eventName').value;
+      const loc = document.getElementById('eventLocation').value;
+      const seats = document.getElementById('seats').value;
+      const total = seats * 150;
+      const dtText = dt.replace("T", " ");
+
+      // تعبئة الفاتورة
+      document.getElementById('invNo').textContent = "رقم الفاتورة: INV-" + Math.floor(Math.random()*900000);
+      document.getElementById('invDate').textContent = "تاريخ الطلب: " + new Date().toLocaleDateString('ar-SA');
+      document.getElementById('iName').textContent = name;
+      document.getElementById('iEvent').textContent = eventName;
+      document.getElementById('iLoc').textContent = loc;
+      document.getElementById('iDT').textContent = dtText;
+      document.getElementById('iSeats').textContent = seats;
+      document.getElementById('iTotal').textContent = total + " ر.س";
+
+      // إظهار الفاتورة
+      document.getElementById('invoiceWrap').style.display = 'block';
+      document.getElementById('invoiceWrap').scrollIntoView({ behavior: 'smooth' });
+
+      // حفظ الحجز في الخلفية لصفحة حسابي
+      const newBooking = { title: eventName, dateTime: dtText, status: "مؤكد", location: loc };
+      let allBookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+      allBookings.push(newBooking);
+      localStorage.setItem("userBookings", JSON.stringify(allBookings));
+    }
+
+    function hideInvoice(){
+      document.getElementById('invoiceWrap').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

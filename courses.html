@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Art Yard | الدورات الفنية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3e2c1c;
+      --accent: #a67c52;
+      --card-bg: #fdfaf7; /* لون بيج فخم وثابت */
+      --text-main: #2f1d13;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+    
+    body { 
+      margin: 0;
+      min-height: 100vh;
+      /* ضعي رابط صورتك هنا */
+      background: url('yo.jpg') no-repeat center center fixed; 
+      background-size: cover;
+      position: relative;
+    }
+
+    /* طبقة باهتة لخلفية الموقع */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.7); 
+      z-index: -1;
+    }
+
+    header { padding: 40px 8% 20px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { font-weight: 800; font-size: 32px; color: var(--primary); }
+    .back-link { text-decoration: none; color: var(--accent); font-weight: 700; border-bottom: 2px solid; }
+
+    .container { padding: 20px 8% 60px; max-width: 1500px; margin: auto; }
+
+    /* شبكة العرض بكروت أكبر */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: 40px;
+    }
+
+    /* الكروت بلون بيج وحجم أكبر */
+    .course-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      border: 1px solid #efeae4;
+      display: flex;
+      flex-direction: column;
+      transition: 0.4s;
+    }
+    .course-card:hover { transform: translateY(-10px); }
+
+    /* صور أكبر وأوضح */
+    .img-container {
+      width: 100%;
+      height: 300px; /* زيادة طول الصورة */
+      padding: 15px;
+      background: #f4f1ee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .course-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+
+    .course-content { padding: 30px; flex-grow: 1; text-align: center; }
+    .course-title { font-size: 24px; font-weight: 800; margin-bottom: 15px; color: var(--primary); }
+    
+    .price-tag { font-size: 22px; font-weight: 800; color: var(--accent); margin-bottom: 20px; }
+
+    .actions { display: flex; gap: 15px; }
+
+    .btn-details {
+      flex: 1;
+      background: none;
+      border: 2px solid var(--accent);
+      color: var(--accent);
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .btn-book {
+      flex: 1;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* النوافذ المنبثقة */
+    .modal {
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+    }
+    .modal-box {
+      background: white; padding: 40px; border-radius: 25px; width: 100%; max-width: 500px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3); position: relative;
+    }
+
+    .info-list { text-align: right; margin: 20px 0; list-style: none; }
+    .info-list li { padding: 10px 0; border-bottom: 1px solid #f0f0f0; color: #444; }
+    .info-list b { color: var(--primary); }
+
+    .modal-box input { width: 100%; padding: 14px; margin-top: 15px; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; }
+    .close-btn { background: #eee; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; margin-top: 10px; width: 100%; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>الدورات التدريبية</h1>
+  <a href="index.html" class="back-link">العودة للرئيسية</a>
+</header>
+
+<div class="container">
+  <div class="grid" id="coursesGrid"></div>
+</div>
+
+<div class="modal" id="detailsModal">
+  <div class="modal-box">
+    <h2 id="detTitle" style="color:var(--primary); margin-bottom: 15px;"></h2>
+    <p id="detContent" style="color: #666; line-height: 1.7; text-align: right; margin-bottom: 20px;"></p>
+    
+    <ul class="info-list">
+      <li><b>مدة الدورة:</b> <span id="detDuration"></span></li>
+      <li><b>المقاعد المتبقية:</b> <span id="detSeats"></span></li>
+      <li><b>الشهادة:</b> <span id="detCert">توجد شهادة معتمدة من المنصة</span></li>
+    </ul>
+
+    <button onclick="closeModals()" class="btn-book" style="width: 100%;">إغلاق</button>
+  </div>
+</div>
+
+<div class="modal" id="bookingModal">
+  <div class="modal-box">
+    <h2 id="bookTitle"></h2>
+    <p style="color: #888;">سيتم ترحيل الحجز لسلتك وحسابك الشخصي</p>
+    <input type="text" id="uName" placeholder="الاسم الكامل">
+    <input type="text" id="uPhone" placeholder="رقم الجوال">
+    <button class="btn-book" style="width: 100%; margin-top: 20px; padding: 15px;" onclick="confirmAll()">تأكيد وإضافة للسلة</button>
+    <button onclick="closeModals()" class="close-btn">إلغاء</button>
+  </div>
+</div>
+
+<script>
+const courses = [
+  {id:301, name:"دورة الرسم الزيتي", trainer:"سلمى خالد", price:900, seats:10, duration:"أسبوعين (3 جلسات أسبوعياً)", img:"course1.jpg", details:"دورة تدريبية مكثفة تشرح فنون المدرسة الواقعية، دمج الألوان الزيتية، وكيفية رسم الطبيعة الصامتة والبورتريه."},
+  {id:302, name:"ورشة صنع الفخار", trainer:"تركي الزهراني", price:600, seats:8, duration:"3 أيام متواصلة", img:"course2.jpg", details:"ورشة عمل يدوية تركز على تشكيل الصلصال الحراري، استخدام عجلة الفخار، وأساسيات التلوين قبل الحرق."},
+  {id:303, name:"أساسيات النحت", trainer:"نورة العتيبي", price:1200, seats:5, duration:"10 أيام", img:"course3.jpg", details:"تعلم هندسة الكتل، النحت البارز والغائر على الجبس، وكيفية استخدام أدوات النحت الدقيقة لصنع مجسمات احترافية."},
+  {id:304, name:"الفن الرقمي", trainer:"فيصل فهد", price:750, seats:12, duration:"5 أيام (ساعتين يومياً)", img:"course4.jpg", details:"شرح أدوات الرسم الرقمي، الطبقات (Layers)، التظليل السينمائي، وتصدير الأعمال الفنية بجودة عالية للطباعة."}
+];
+
+const grid = document.getElementById("coursesGrid");
+let selected = null;
+
+courses.forEach(c => {
+  grid.innerHTML += `
+    <div class="course-card">
+      <div class="img-container">
+        <img src="${c.img}" class="course-img" alt="${c.name}">
+      </div>
+      <div class="course-content">
+        <h3 class="course-title">${c.name}</h3>
+        <div style="color: #7d6e63; margin-bottom: 15px;">المدرب: ${c.trainer}</div>
+        <div class="price-tag">${c.price} ر.س</div>
+        <div class="actions">
+          <button class="btn-details" onclick='showDet(${JSON.stringify(c)})'>التفاصيل</button>
+          <button class="btn-book" onclick='showBook(${JSON.stringify(c)})'>حجز الآن</button>
+        </div>
+      </div>
+    </div>
+  `;
+});
+
+function showDet(c) {
+  document.getElementById("detTitle").innerText = c.name;
+  document.getElementById("detContent").innerText = c.details;
+  document.getElementById("detDuration").innerText = c.duration;
+  document.getElementById("detSeats").innerText = c.seats;
+  document.getElementById("detailsModal").style.display = "flex";
+}
+
+function showBook(c) {
+  selected = c;
+  document.getElementById("bookTitle").innerText = "حجز " + c.name;
+  document.getElementById("bookingModal").style.display = "flex";
+}
+
+function closeModals() {
+  document.querySelectorAll(".modal").forEach(m => m.style.display = "none");
+}
+
+function confirmAll() {
+  const name = document.getElementById("uName").value;
+  if(!name) return alert("لطفاً أدخل اسمك");
+
+  // ترحيل لحسابي
+  let orders = JSON.parse(localStorage.getItem("userOrders") || "[]");
+  orders.push({ id: "CO-"+selected.id, total: selected.price, date: new Date().toLocaleDateString('ar-SA'), status: "حجز دورة" });
+  localStorage.setItem("userOrders", JSON.stringify(orders));
+
+  // ترحيل للسلة
+  let cart = JSON.parse(localStorage.getItem("artgallery_cart_v1") || "[]");
+  cart.push({ productId: selected.id, name: selected.name, price: selected.price });
+  localStorage.setItem("artgallery_cart_v1", JSON.stringify(cart));
+
+  alert("تم الحجز بنجاح! ستجد الدورة في سلتك وحسابك الشخصي.");
+  window.location.href = "invoice.html";
+}
+</script>
+</body>
+</html>

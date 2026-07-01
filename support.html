@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>مركز المساعدة | The Art Yard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3e2c1c;
+            --accent: #8b572a;
+            --bg: #fdfaf7;
+            --white: #ffffff;
+            --border: #eadbcb;
+            --text-muted: #8d7a6b;
+            --header-dark: #3e2c1c; /* لون الهيدر الغامق */
+        }
+
+        body { 
+            background-color: var(--bg); 
+            font-family: 'Cairo', sans-serif; 
+            margin: 0; 
+            color: var(--primary);
+        }
+
+        /* تعديل الهيدر ليكون بخلفية غامقة */
+        header {
+            background: var(--header-dark);
+            padding: 40px 0;
+            text-align: center;
+            color: white; /* تغيير لون النص للأبيض */
+        }
+
+        .header-content h1 { 
+            margin: 0; 
+            font-size: 28px; 
+            font-weight: 800; 
+            letter-spacing: -0.5px;
+        }
+
+        .header-content p { 
+            margin: 10px 0 0; 
+            color: #eadbcb; /* لون فاتح متناسق مع البني */
+            font-size: 15px; 
+            opacity: 0.9;
+        }
+
+        .support-nav {
+            max-width: 1100px;
+            margin: 25px auto 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        /* تعديل أزرار التنقل لتناسب الخلفية الغامقة */
+        .nav-btn {
+            text-decoration: none;
+            padding: 8px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.05);
+        }
+        .nav-btn:hover { 
+            background: var(--accent); 
+            border-color: var(--accent);
+        }
+
+        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+
+        /* بطاقات التواصل */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .contact-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(62,44,28,0.05); }
+        .contact-card h3 { font-size: 18px; margin-bottom: 10px; }
+        .contact-card p { font-size: 13px; color: var(--text-muted); margin-bottom: 15px; }
+        .contact-link { 
+            color: var(--accent); 
+            text-decoration: none; 
+            font-weight: 800; 
+            font-size: 15px;
+            display: block;
+            padding: 10px;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        /* النموذج */
+        .support-panel {
+            background: var(--white);
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+        }
+        .panel-title { 
+            font-size: 20px; 
+            font-weight: 800; 
+            margin-bottom: 25px; 
+            border-right: 4px solid var(--accent);
+            padding-right: 15px;
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+
+        label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--primary); }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: var(--bg);
+            font-family: 'Cairo';
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .submit-btn:hover { background: var(--accent); }
+
+        /* الأسئلة الشائعة */
+        .faq-item {
+            margin-bottom: 10px;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            background: var(--white);
+        }
+        .faq-q {
+            width: 100%;
+            padding: 18px;
+            background: none;
+            border: none;
+            text-align: right;
+            font-family: 'Cairo';
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            color: var(--primary);
+        }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: 0.3s ease-out;
+            background: var(--bg);
+            padding: 0 18px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .faq-a.open { padding: 15px 18px; max-height: 200px; border-top: 1px solid var(--border); }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: 700;
+            display: none;
+            z-index: 1000;
+        }
+        .toast.show { display: block; animation: fadeInUp 0.3s; }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+        <h1>مركز المساعدة والدعم</h1>
+        <p>فريق The Art Yard هنا لخدمتكم</p>
+    </div>
+    <div class="support-nav">
+        <a href="index.html" class="nav-btn">الرئيسية</a>
+        <a href="my_account.html" class="nav-btn">حسابي</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="contact-grid">
+        <div class="contact-card">
+            <h3>اتصال مباشر</h3>
+            <p>للاستفسارات الهاتفية العامة</p>
+            <a href="tel:+966500000000" class="contact-link">+966 50 000 0000</a>
+        </div>
+        <div class="contact-card">
+            <h3>واتساب الأعمال</h3>
+            <p>للمحادثات السريعة والطلبات</p>
+            <a href="https://wa.me/966500000000" target="_blank" class="contact-link">بدء محادثة</a>
+        </div>
+        <div class="contact-card">
+            <h3>البريد الرسمي</h3>
+            <p>للمعاملات الرسمية والشكاوى</p>
+            <a href="mailto:support@theartyard.sa" class="contact-link">support@theartyard.sa</a>
+        </div>
+    </section>
+
+    <section class="support-panel">
+        <div class="panel-title">إنشاء تذكرة دعم</div>
+        <form id="ticketForm" onsubmit="return false;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الاسم بالكامل</label>
+                    <input id="sp_name" type="text" placeholder="أدخل اسمك">
+                </div>
+                <div class="form-group">
+                    <label>رقم الجوال</label>
+                    <input id="sp_phone" type="text" placeholder="05xxxxxxxx">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input id="sp_email" type="email" placeholder="example@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>نوع الاستفسار</label>
+                    <select id="sp_type">
+                        <option value="استفسار عام">استفسار عام</option>
+                        <option value="مشكلة تقنية">مشكلة تقنية</option>
+                        <option value="شكوى">شكوى</option>
+                        <option value="اقتراح">اقتراح</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>موضوع الرسالة</label>
+                <input id="sp_subject" type="text" placeholder="عنوان مختصر للطلب">
+            </div>
+
+            <div class="form-group">
+                <label>التفاصيل</label>
+                <textarea id="sp_msg" rows="4" placeholder="اكتب استفسارك هنا..."></textarea>
+            </div>
+
+            <button class="submit-btn" type="button" onclick="submitTicket()">إرسال التذكرة</button>
+        </form>
+    </section>
+
+    <section class="support-panel">
+        <div class="panel-title">الأسئلة الشائعة</div>
+        
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">كيف يمكنني حجز زيارة للمعرض؟ <span>+</span></button>
+            <div class="faq-a">يمكنك الحجز مباشرة من خلال صفحة "حجز زيارة" في القائمة الرئيسية واختيار الموعد المناسب.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">هل الأعمال الفنية متاحة للشحن الدولي؟ <span>+</span></button>
+            <div class="faq-a">نعم، نوفر خدمة التغليف الاحترافي والشحن لكافة مناطق المملكة ودول الخليج.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q" onclick="toggleFaq(this)">كيف يمكنني استلام فاتورة الشراء؟ <span>+</span></button>
+            <div class="faq-a">بعد إتمام عملية الدفع، تظهر لك الفاتورة فوراً ويمكنك تحميلها PDF، كما تُحفظ نسخة في "سجل الطلبات" بحسابك.</div>
+        </div>
+    </section>
+
+</main>
+
+<div class="toast" id="supportToast">تم استلام طلبك بنجاح</div>
+
+<script>
+function toggleFaq(btn) {
+    const ans = btn.nextElementSibling;
+    const allAns = document.querySelectorAll('.faq-a');
+    
+    allAns.forEach(a => {
+        if (a !== ans) a.classList.remove('open');
+    });
+    
+    ans.classList.toggle('open');
+}
+
+function submitTicket() {
+    const subject = document.getElementById("sp_subject").value;
+    const msg = document.getElementById("sp_msg").value;
+    const toast = document.getElementById("supportToast");
+
+    if(!subject || !msg) {
+        alert("يرجى إكمال البيانات المطلوبة.");
+        return;
+    }
+
+    const ticket = {
+        id: "T-" + Math.floor(Math.random()*9000),
+        subject,
+        date: new Date().toLocaleDateString('ar-SA')
+    };
+    
+    let tickets = JSON.parse(localStorage.getItem("artgallery_support_tickets_v1") || "[]");
+    tickets.unshift(ticket);
+    localStorage.setItem("artgallery_support_tickets_v1", JSON.stringify(tickets));
+
+    toast.classList.add("show");
+    setTimeout(() => {
+        toast.classList.remove("show");
+        document.getElementById("ticketForm").reset();
+    }, 2000);
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>تسجيل الدخول | The Art Yard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            /* استبدلي الصورة هنا برابط صورتك */
+            background: url(visit.jpg) no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* الطبقة الشفافة الضبابية */
+        .box {
+            background: rgba(255, 255, 255, 0.15); /* شفافية عالية */
+            backdrop-filter: blur(15px); /* تأثير الضباب */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 40px;
+            border-radius: 25px;
+            width: 380px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            color: #fff;
+        }
+
+        h1 { color: #fff; margin-bottom: 25px; font-weight: 800; }
+        
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab { 
+            flex: 1; padding: 10px; cursor: pointer; 
+            border-bottom: 2px solid rgba(255,255,255,0.1); transition: 0.3s;
+        }
+        .tab.active { border-bottom: 3px solid #d4a373; font-weight: bold; }
+
+        label { display: block; text-align: right; margin: 10px 0 5px; font-size: 14px; }
+        
+        input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border-radius: 10px; border: none;
+            background: rgba(255, 255, 255, 0.9);
+            box-sizing: border-box; font-family: 'Cairo';
+        }
+
+        button {
+            width: 100%; padding: 15px; border-radius: 10px; border: none;
+            background: #d4a373; color: white; font-weight: bold;
+            cursor: pointer; transition: 0.3s; font-size: 16px;
+        }
+        button:hover { background: #b08968; transform: translateY(-2px); }
+
+        .back a { color: #fff; text-decoration: none; font-size: 13px; display: block; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h1>The Art Yard</h1>
+    <div class="tabs">
+        <div class="tab active" onclick="showLogin()">تسجيل دخول</div>
+        <div class="tab" onclick="showRegister()">تسجيل جديد</div>
+    </div>
+
+    <div id="login">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="login-email" placeholder="example@email.com">
+        <label>كلمة المرور</label>
+        <input type="password" id="login-password" placeholder="••••••••">
+        <button type="button" onclick="login()">دخول</button>
+    </div>
+
+    <div id="register" style="display:none;">
+        <label>الاسم</label>
+        <input type="text" id="name" placeholder="اسمك الكامل">
+        <label>رقم الجوال</label>
+        <input type="text" id="phone" placeholder="05xxxxxxxx">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="email" placeholder="example@email.com">
+        <label>كلمة المرور</label>
+        <input type="password" id="password" placeholder="••••••••">
+        <button type="button" onclick="submitForm()">سجل الآن</button>
+    </div>
+
+    <div class="back"><a href="index.html">← العودة للرئيسية</a></div>
+</div>
+
+<script>
+function showLogin(){
+    document.getElementById("login").style.display="block";
+    document.getElementById("register").style.display="none";
+    document.querySelectorAll(".tab")[0].classList.add("active");
+    document.querySelectorAll(".tab")[1].classList.remove("active");
+}
+
+function showRegister(){
+    document.getElementById("login").style.display="none";
+    document.getElementById("register").style.display="block";
+    document.querySelectorAll(".tab")[1].classList.add("active");
+    document.querySelectorAll(".tab")[0].classList.remove("active");
+}
+
+function submitForm() {
+    const data = {
+        name: document.getElementById('name').value,
+        phone: document.getElementById('phone').value,
+        email: document.getElementById('email').value
+    };
+
+    if(data.name && data.email) {
+        // تخزين البيانات في الـ LocalStorage
+        localStorage.setItem("userLoggedIn", "true");
+        localStorage.setItem("userName", data.name);
+        localStorage.setItem("userEmail", data.email);
+        localStorage.setItem("userPhone", data.phone);
+
+        alert('تم التسجيل بنجاح، أهلاً بك يا ' + data.name);
+        window.location.href = 'my_account.html';
+    } else {
+        alert("لطفاً أكمل البيانات");
+    }
+}
+
+function login() {
+    // محاكاة تسجيل دخول سريع للعرض
+    localStorage.setItem("userLoggedIn", "true");
+    localStorage.setItem("userName", "زائر فني"); 
+    window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>

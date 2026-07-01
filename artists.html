@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Art Yard | مبدعينا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3e2c1c;
+      --accent: #a67c52;
+      --card-bg: #fdfaf7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+    
+    body { 
+      margin: 0;
+      min-height: 100vh;
+      background: url('your-background-image.jpg') no-repeat center center fixed; 
+      background-size: cover;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.75); 
+      z-index: -1;
+    }
+
+    .nav-bar { padding: 25px 8%; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-weight: 800; font-size: 24px; color: var(--primary); }
+    .back-link { text-decoration: none; color: var(--accent); font-weight: 700; border-bottom: 2px solid; }
+
+    .hero { text-align: center; padding: 10px 8% 40px; }
+    .hero h1 { font-size: 40px; font-weight: 800; color: var(--primary); }
+    .hero p { color: #5a4a3c; font-size: 18px; margin-top: 10px; }
+
+    .container { padding: 0 8% 60px; max-width: 1400px; margin: auto; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    @media (max-width: 1024px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .grid { grid-template-columns: 1fr; } }
+
+    .artist-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid #efeae4;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      transition: 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+    .artist-card:hover { transform: translateY(-8px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+
+    .works-grid {
+      display: flex;
+      gap: 10px;
+      height: 180px;
+      margin-bottom: 20px;
+    }
+    .work-box { flex: 1; border-radius: 12px; overflow: hidden; background: #eee; }
+    .work-box img { width: 100%; height: 100%; object-fit: cover; }
+
+    .artist-name { font-size: 22px; font-weight: 800; color: var(--primary); margin-bottom: 5px; text-align: center;}
+    .specialty { color: var(--accent); font-weight: 700; font-size: 14px; display: block; text-align: center; margin-bottom: 15px;}
+    
+    .bio-text { 
+      font-size: 14px; 
+      color: #6d5b4e; 
+      line-height: 1.6; 
+      text-align: center; 
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    /* تنسيق الإنستقرام بالعبارة الجديدة */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      border-top: 1px solid #eee;
+      padding-top: 15px;
+    }
+    .social-links a {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .social-links a i { font-size: 17px; }
+    .social-links a:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <div class="logo">The Art Yard</div>
+  <a href="index.html" class="back-link">العودة</a>
+</div>
+
+<header class="hero">
+  <h1>فنانين THE ART YARD</h1>
+  <p>خلف كل لوحة حكاية، تعرف على أصحاب الريشة المبدعة</p>
+</header>
+
+<div class="container">
+  <div class="grid" id="artistsGrid"></div>
+</div>
+
+<script>
+const artists = [
+  {
+    name: "فيصل المحمد",
+    spec: "فنان تشكيلي",
+    bio: "فنان محترف يدمج بين الرمزية والحداثة، يسعى من خلال أعماله لتقديم رؤية بصرية تعكس عمق الثقافة العربية بأسلوب فني متجدد.",
+    img1: "EK (1).jpg", img2: "EK (2).jpg"
+  },
+  {
+    name: "نورة العتيبي",
+    spec: "فنانة رسم زيتي",
+    bio: "متخصصة في رسم الطبيعة والبورتريه بالألوان الزيتية، تتميز بأسلوبها الكلاسيكي وقدرتها العالية على محاكاة الضوء والظل بدقة.",
+    img1: "ZE (1).jpg", img2: "w_reem2.jpg"
+  },
+  {
+    name: "سعود بن فهد",
+    spec: "فنان نحت",
+    bio: "يُطوع الرخام والمعادن ليخلق مجسمات تحكي قصصاً من الخيال، يركز في أعماله على التوازن الحركي والكتل الفنية المبتكرة.",
+    img1: "NH.jpg", img2: "NH1.jpg"
+  },
+  {
+    name: "سارة خالد",
+    spec: "فنانة فخار وخزف",
+    bio: "تبدع في تشكيل الطين يدوياً، حيث تدمج بين الوظيفة والجمال لتنتج قطعاً خزفية فريدة تحمل طابعاً تراثياً برؤية عصرية أنيقة.",
+    img1: "f1.jpg", img2: "f2.jpg"
+  },
+  {
+    name: "بندر الراشد",
+    spec: "فنان في الفن المعاصر ",
+    bio: "يستنطق السواد والبياض في لوحات واقعية مذهلة، يركز على أدق التفاصيل في الوجوه، مما يجعل أعماله تبدو وكأنها تنبض بالحياة.",
+    img1: "M (1).jpg", img2: "M (2).jpg"
+  },
+  {
+    name: "ياسمين السالم",
+    spec: "فنانة رسم إكريليك",
+    bio:"تستلهم من تفاصيل الحاضر عوالما فنية غير مألوفة,تمزج فيها بين الرمزية و الواقع المعاصر لتخل تجربة بصرية تخاطب العقل وتكسر قيود الرسم التقليدي   ",
+    img1: "d1.jpg", img2: "d2.jpg"
+  }
+];
+
+const grid = document.getElementById("artistsGrid");
+
+artists.forEach(a => {
+  grid.innerHTML += `
+    <div class="artist-card">
+      <div class="works-grid">
+        <div class="work-box"><img src="${a.img1}"></div>
+        <div class="work-box"><img src="${a.img2}"></div>
+      </div>
+      <span class="specialty">${a.spec}</span>
+      <h3 class="artist-name">${a.name}</h3>
+      <p class="bio-text">${a.bio}</p>
+      <div class="social-links">
+        <a href="https://instagram.com" target="_blank">
+          <i class="fab fa-instagram"></i>
+          <span></span>
+        </a>
+      </div>
+    </div>
+  `;
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>The Art Yard | الرئيسية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* تنسيق إضافي بسيط لزر الخروج */
+        .logout-link {
+            margin-right: 10px;
+            color: #c0392b !important;
+            font-size: 11px !important;
+            text-decoration: underline !important;
+            cursor: pointer;
+        }
+        .user-greeting {
+            font-weight: bold;
+            color: #4b2f1f;
+        }
+    </style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo" id="t_logo">The Art Yard</div>
+    <div class="search">
+      <input id="t_search" placeholder="ابحث عن عمل فني أو فنان">
+    </div>
+    <div class="nav-actions" id="auth-zone">
+      <a class="btn-pill" id="t_login" href="auth.html">تسجيل / دخول</a>
+      <a class="icon" href="invoice.html" id="t_cart">🛒</a>
+      <a class="btn-pill" id="t_support" href="support.html">الدعم</a>
+      <a class="btn-pill" id="t_account" href="my_account.html">حسابي</a>
+      <button class="btn-pill" onclick="toggleLang()" id="langBtn">EN</button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <h1 id="t_hero_title">مرحباً بك في The Art Yard</h1>
+  <p id="t_hero_desc">استعرض الأعمال الفنية، احجز زيارتك، أو شارك في الدورات التدريبية.</p>
+
+  <div class="hero-actions">
+    <a class="btn-main" id="t_btn_art" href="artworks.html">استعراض الأعمال</a>
+    <a class="btn-outline" id="t_btn_pay" href="invoice.html">الدفع</a>
+  </div>
+</section>
+
+<section class="section">
+  <h2 id="t_services">الخدمات</h2>
+  <div class="cards">
+    <div class="card">
+      <img src="artworks.jpg">
+      <div class="card-body">
+        <h3 id="t_art_title">الأعمال الفنية</h3>
+        <p id="t_art_desc">لوحات وأعمال فنية متنوعة</p>
+        <div class="card-actions">
+          <a class="go" id="t_go_art" href="artworks.html">الانتقال</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="visit.jpg">
+      <div class="card-body">
+        <h3 id="t_visit">حجز زيارة</h3>
+        <p id="t_visit_desc">اختيار تاريخ وعدد الزوار</p>
+        <div class="card-actions">
+          <a class="go" id="t_go_visit" href="booking.html">الانتقال</a>
+          <a class="inv" id="t_go_inv1" href="invoice.html">الفواتير</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="courses.jpg">
+      <div class="card-body">
+        <h3 id="t_courses">الدورات التدريبية</h3>
+        <p id="t_courses_desc">ورش ودورات فنية</p>
+        <div class="card-actions">
+          <a class="go" id="t_go_courses" href="courses.html">الانتقال</a>
+          <a class="inv" id="t_go_inv2" href="invoice.html">الفواتير</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="artists.jpg">
+      <div class="card-body">
+        <h3 id="t_artists">تعرف على الفنانين</h3>
+        <p id="t_artists_desc">اكتشف الفنانين وأعمالهم</p>
+        <div class="card-actions">
+          <a class="go" id="t_go_artists" href="artists.html">الانتقال</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="home-ads">
+  <h2 id="t_ads_title">المعارض والفعاليات السابقة</h2>
+  <div class="ads-grid">
+    <div class="ad-card large">
+      <img src="event1.jpg">
+      <div class="ad-overlay">
+        <span class="ad-badge" id="t_badge1">معرض سابق</span>
+        <h3 id="t_event1_title">أمسية الفن الحديث</h3>
+        <p id="t_event1_desc">لقطات من الفعاليات السابقة داخل المعرض</p>
+      </div>
+    </div>
+    <div class="ad-card">
+      <img src="event2.jpg">
+      <div class="ad-overlay">
+        <span class="ad-badge" id="t_badge2">فعالية</span>
+        <h3 id="t_event2_title">ورشة الرسم</h3>
+      </div>
+    </div>
+    <div class="ad-card">
+      <img src="event3.jpg">
+      <div class="ad-overlay">
+        <span class="ad-badge" id="t_badge3">معرض</span>
+        <h3 id="t_event3_title">معرض الفخار</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="t_footer">
+©️ The Art Yard — MIS Graduation Project
+</footer>
+
+<script>
+// متغير اللغة العالمي
+let lang = "ar";
+
+const en = {
+  search: "Search artworks or artists",
+  login: "Sign in",
+  logout: "Logout",
+  welcome: "Hello",
+  support: "Support",
+  account: "My Account",
+  heroTitle: "Welcome to The Art Yard",
+  heroDesc: "Browse artworks, book visits, and join training courses.",
+  artBtn: "Browse Artworks",
+  pay: "Payment",
+  services: "Services",
+  artTitle: "Artworks",
+  artDesc: "Paintings and artworks",
+  visit: "Book a Visit",
+  visitDesc: "Choose date and number of visitors",
+  courses: "Training Courses",
+  coursesDesc: "Art workshops",
+  artists: "Meet Artists",
+  artistsDesc: "Discover artists and their work",
+  go: "Go",
+  invoices: "Invoices",
+  adsTitle: "Previous Exhibitions & Events",
+  badgeEx: "Past Exhibition",
+  badgeEv: "Event",
+  event1Title: "Modern Art Evening",
+  event1Desc: "Snapshots from previous events",
+  event2Title: "Painting Workshop",
+  event3Title: "Pottery Exhibition",
+  footer: "©️ The Art Yard — MIS Graduation Project"
+};
+
+// وظيفة تحديث حالة الترحيب
+function updateAuthZone() {
+    const isLoggedIn = localStorage.getItem("userLoggedIn");
+    const userName = localStorage.getItem("userName");
+    const loginBtn = document.getElementById("t_login");
+    
+    // إزالة رابط الخروج القديم إذا وجد لتجنب التكرار
+    const oldLogout = document.getElementById("logout_id");
+    if (oldLogout) oldLogout.remove();
+
+    if (isLoggedIn === "true" && userName) {
+        const welcomeText = lang === "ar" ? "أهلاً" : "Hello";
+        loginBtn.innerHTML = `<span class="user-greeting">${welcomeText}, ${userName}</span>`;
+        loginBtn.href = "my_account.html";
+        
+        const logoutLink = document.createElement("a");
+        logoutLink.id = "logout_id";
+        logoutLink.innerText = lang === "ar" ? "خروج" : "Logout";
+        logoutLink.className = "logout-link";
+        logoutLink.onclick = function() {
+            localStorage.clear();
+            window.location.reload();
+        };
+        loginBtn.parentNode.insertBefore(logoutLink, loginBtn.nextSibling);
+    } else {
+        loginBtn.innerText = lang === "ar" ? "تسجيل / دخول" : en.login;
+        loginBtn.href = "auth.html";
+    }
+}
+
+// تنفيذ الترحيب عند تحميل الصفحة
+window.addEventListener('load', updateAuthZone);
+
+// وظيفة تغيير اللغة
+function toggleLang() {
+  const btn = document.getElementById("langBtn");
+  if (lang === "ar") {
+    document.documentElement.dir = "ltr";
+    document.documentElement.lang = "en";
+    lang = "en";
+    btn.innerText = "AR";
+    
+    // تحديث كافة النصوص في الصفحة
+    document.getElementById("t_search").placeholder = en.search;
+    document.getElementById("t_support").innerText = en.support;
+    document.getElementById("t_account").innerText = en.account;
+    document.getElementById("t_hero_title").innerText = en.heroTitle;
+    document.getElementById("t_hero_desc").innerText = en.heroDesc;
+    document.getElementById("t_btn_art").innerText = en.artBtn;
+    document.getElementById("t_btn_pay").innerText = en.pay;
+    document.getElementById("t_services").innerText = en.services;
+    document.getElementById("t_art_title").innerText = en.artTitle;
+    document.getElementById("t_art_desc").innerText = en.artDesc;
+    document.getElementById("t_visit").innerText = en.visit;
+    document.getElementById("t_visit_desc").innerText = en.visitDesc;
+    document.getElementById("t_courses").innerText = en.courses;
+    document.getElementById("t_courses_desc").innerText = en.coursesDesc;
+    document.getElementById("t_artists").innerText = en.artists;
+    document.getElementById("t_artists_desc").innerText = en.artistsDesc;
+    document.getElementById("t_go_art").innerText = en.go;
+    document.getElementById("t_go_visit").innerText = en.go;
+    document.getElementById("t_go_courses").innerText = en.go;
+    document.getElementById("t_go_artists").innerText = en.go;
+    document.getElementById("t_go_inv1").innerText = en.invoices;
+    document.getElementById("t_go_inv2").innerText = en.invoices;
+    document.getElementById("t_ads_title").innerText = en.adsTitle;
+    document.getElementById("t_badge1").innerText = en.badgeEx;
+    document.getElementById("t_badge2").innerText = en.badgeEv;
+    document.getElementById("t_badge3").innerText = en.badgeEx;
+    document.getElementById("t_event1_title").innerText = en.event1Title;
+    document.getElementById("t_event1_desc").innerText = en.event1Desc;
+    document.getElementById("t_event2_title").innerText = en.event2Title;
+    document.getElementById("t_event3_title").innerText = en.event3Title;
+    document.getElementById("t_footer").innerText = en.footer;
+
+    // تحديث منطقة الحساب والترحيب باللغة الجديدة
+    updateAuthZone();
+
+  } else {
+    // إعادة تحميل الصفحة للعودة للعربية (أسرع وأضمن)
+    location.reload();
+  }
+}
+</script>
+</body>
+</html>

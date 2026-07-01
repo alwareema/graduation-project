@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>الأعمال الفنية | The art yard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+/* تعديل حجم وشكل الإشعار (Toast) ليكون معقولاً وأنيقاً */
+.toast {
+    position: fixed;
+    bottom: -80px; /* البداية من خارج الشاشة في الأسفل */
+    right: 20px; /* يظهر في الزاوية السفلى اليسرى (لأن الاتجاه RTL) */
+    background-color: #3e2c1c; /* لون غامق وواضح */
+    color: white;
+    padding: 10px 20px; /* حجم معقول ومتناسب */
+    border-radius: 8px; /* حواف ناعمة */
+    font-size: 14px; /* حجم خط مناسب للإشعار */
+    font-weight: 600; /* خط شبه عريض */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: bottom 0.4s ease-in-out;
+    z-index: 9999;
+    display: block !important; /* لضمان الظهور عند إضافة الكلاس */
+    min-width: 200px; /* عرض أدنى لضمان تناسق النص */
+    text-align: center;
+}
+.toast.show {
+    bottom: 20px; /* يرتفع للأعلى قليلاً ليستقر في الزاوية */
+}
+
+/* تنسيق الهيدر لإضافة زر السلة */
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+.cartBtn {
+    background-color: #3e2c1c;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+.cartBtn:hover {
+    background-color: #8b572a;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="nav">
+    <div class="logo">الأعمال الفنية</div>
+    <div class="nav-links">
+        <a class="cartBtn" href="invoice.html">🛒 السلة</a>
+        <a class="backBtn" href="index.html">العودة للواجهة</a>
+    </div>
+  </div>
+</header>
+
+<section class="section">
+  <h2>مجموعة مختارة من اللوحات</h2>
+  <div class="grid" id="gallery"></div>
+</section>
+
+<div class="toast" id="toast">تم إضافة المنتج للسلة ✅</div>
+
+<script>
+const LS_CART = "artgallery_cart_v1";
+
+const artworks = [
+  {id:101, title:"همسات الربيع", artist:"فيصل فهد", price:510, img:"art2.jpg", available:true},
+  {id:102, title:"ضوء الغابة", artist:"محمد السليم", price:780, img:"art3.jpg", available:true},
+  {id:103, title:"الإنسجام", artist:"صفية بن زقر", price:620, img:"art1.jpg", available:true},
+  {id:104, title:"ورد الحلم", artist:"جود العباسي", price:450, img:"art4.jpg", available:false},
+  {id:105, title:"الظبي", artist:"تركي الزهراني", price:830, img:"art6.jpg", available:true},
+  {id:106, title:"حكاية بحر", artist:"عبدالله الشمري", price:990, img:"art5.jpg", available:false},
+  {id:107, title:"السمفونية", artist:"نورة العتيبي", price:720, img:"art7.jpg", available:true},
+  {id:108, title:"الذات", artist:"لمى الشمراني", price:560, img:"art8.jpg", available:true},
+  {id:109, title:"أثر الزمن", artist:"خالد الحربي", price:870, img:"art9.jpg", available:false},
+  {id:110, title:"الذكرى", artist:"دانا المطيري", price:640, img:"art11.jpg", available:true},
+  {id:111, title:"حلم بعيد", artist:"عبير أحمد", price:910, img:"art10.jpg", available:true},
+  {id:112, title:"موعد الظلال", artist:"ناجي العلي", price:730, img:"art12.jpg", available:false}
+];
+
+function safeGetCart(){
+  try { return JSON.parse(localStorage.getItem(LS_CART) || "[]"); }
+  catch(e){ return []; }
+}
+function safeSetCart(cart){
+  localStorage.setItem(LS_CART, JSON.stringify(cart));
+}
+
+function showToast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  // إخفاء الإشعار بعد وقت قصير
+  setTimeout(()=> t.classList.remove("show"), 2500);
+}
+
+function addToCart(art){
+  if(!art.available){
+    showToast("هذا المنتج غير متوفر ❌");
+    return;
+  }
+
+  const cart = safeGetCart();
+  const exists = cart.some(x => x.id === art.id);
+
+  if(exists){
+    showToast("المنتج موجود بالسلة مسبقًا 🛒");
+    return;
+  }
+
+  cart.push({...art, qty:1});
+  safeSetCart(cart);
+  showToast("تم إضافة المنتج للسلة بنجاح ✅");
+}
+
+const gallery = document.getElementById("gallery");
+gallery.innerHTML = artworks.map(art => `
+  <div class="card">
+    <img src="${art.img}" alt="${art.title}">
+    <div class="card-body">
+      <h3>${art.title}</h3>
+
+      <div class="meta">
+        <div><b>اسم الفنان:</b> ${art.artist}</div>
+        <div><b>رقم المنتج:</b> ${art.id}</div>
+      </div>
+
+      <div class="price">${art.price} ر.س</div>
+
+      <div class="status ${art.available ? 'available' : 'unavailable'}">
+        ${art.available ? 'متوفر' : 'غير متوفر'}
+      </div>
+
+      <div class="actions">
+        <button ${art.available ? "" : "disabled"} onclick='addToCart(${JSON.stringify(art)})'>
+          🛒 إضافة للسلة
+        </button>
+      </div>
+    </div>
+  </div>
+`).join("");
+</script>
+
+</body>
+</html>

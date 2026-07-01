@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي | The Art Yard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #3e2c1c;
+            --accent: #8b572a;
+            --bg: #fdfaf7;
+            --white: #ffffff;
+            --text: #2f1d13;
+            --muted: #8d7a6b;
+            --border: #eadbcb;
+            --danger: #c0392b;
+            --success-bg: #f0f7f2;
+            --success-text: #2e7d32;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; }
+
+        /* الهيدر */
+        header { 
+            background: var(--white); 
+            border-bottom: 1px solid var(--border); 
+            padding: 20px 0; 
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav { max-width: 1100px; margin: auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+        .logo { font-weight: 800; font-size: 24px; color: var(--primary); letter-spacing: -0.5px; }
+
+        .container { max-width: 900px; margin: 50px auto; padding: 0 20px; }
+
+        /* بطاقة الملف الشخصي */
+        .profile-card {
+            background: var(--white); 
+            border-radius: 30px; 
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(62, 44, 28, 0.04); 
+            border: 1px solid var(--border);
+            text-align: center; 
+            margin-bottom: 40px;
+        }
+
+        .avatar {
+            width: 90px; height: 90px; 
+            background: var(--primary); 
+            color: var(--white);
+            border-radius: 25px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-size: 35px; 
+            font-weight: 800; 
+            margin: 0 auto 20px;
+            transform: rotate(-3deg);
+        }
+
+        .user-info-details { 
+            margin-top: 20px; 
+            padding-top: 20px;
+            border-top: 1px solid var(--bg);
+            color: var(--muted); 
+            font-size: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        /* العناوين */
+        .section-title { 
+            font-size: 20px; 
+            font-weight: 800;
+            margin: 40px 0 20px; 
+            color: var(--primary); 
+            display: flex; 
+            align-items: center;
+            border-right: 4px solid var(--accent);
+            padding-right: 15px;
+        }
+
+        /* القوائم والبطاقات */
+        .item-list { display: grid; gap: 15px; }
+        
+        .card-item {
+            background: var(--white); 
+            border: 1px solid var(--border);
+            padding: 22px; 
+            border-radius: 20px; 
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            transition: all 0.3s ease;
+        }
+        .card-item:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.03); }
+
+        .item-info h4 { font-size: 17px; color: var(--primary); margin-bottom: 4px; }
+        .item-info p { font-size: 13px; color: var(--muted); font-weight: 600; }
+
+        /* الشارات والأزرار */
+        .status-badge { 
+            background: var(--success-bg); 
+            color: var(--success-text); 
+            padding: 6px 16px; 
+            border-radius: 12px; 
+            font-weight: 700; 
+            font-size: 12px; 
+        }
+
+        .delete-btn {
+            background: #fff; 
+            border: 1px solid #eee; 
+            color: #999;
+            padding: 8px 16px; 
+            border-radius: 12px; 
+            cursor: pointer;
+            font-size: 12px; 
+            font-weight: 700; 
+            transition: 0.3s;
+        }
+        .delete-btn:hover { background: var(--danger); color: white; border-color: var(--danger); }
+
+        .logout-btn { 
+            background: transparent;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 8px 20px;
+            border-radius: 12px;
+            cursor: pointer; 
+            font-size: 13px; 
+            margin-top: 25px; 
+            display: inline-block;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+        .logout-btn:hover { background: var(--primary); color: white; }
+
+        .empty-state { 
+            text-align: center; 
+            padding: 40px; 
+            color: var(--muted); 
+            background: rgba(255,255,255,0.4); 
+            border: 1px solid var(--border); 
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav">
+            <div class="logo">The Art Yard</div>
+            <a href="index.html" style="text-decoration: none; color: var(--accent); font-weight: 700; font-size: 14px;">العودة للرئيسية</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile-card">
+            <div class="avatar" id="userInitials">-</div>
+            <h2 id="welcomeMsg" style="font-weight: 800; color: var(--primary);">أهلاً بك</h2>
+            
+            <div class="user-info-details">
+                <span id="displayEmail">البريد: --</span>
+                <span id="displayPhone">الهاتف: --</span>
+            </div>
+            
+            <button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+        </div>
+
+        <h3 class="section-title">الفعاليات القادمة</h3>
+        <div id="bookingsList" class="item-list"></div>
+
+        <h3 class="section-title">سجل الطلبات</h3>
+        <div id="ordersList" class="item-list"></div>
+    </div>
+
+    <script>
+        window.onload = function() {
+            renderPage();
+        };
+
+        function renderPage() {
+            // 1. بيانات المستخدم
+            const userName = localStorage.getItem("userName") || "ضيف";
+            const userEmail = localStorage.getItem("userEmail") || "غير متوفر";
+            const userPhone = localStorage.getItem("userPhone") || "غير متوفر";
+
+            document.getElementById("welcomeMsg").innerText = "أهلاً بك، " + userName;
+            document.getElementById("userInitials").innerText = userName.charAt(0).toUpperCase();
+            document.getElementById("displayEmail").innerText = "البريد: " + userEmail;
+            document.getElementById("displayPhone").innerText = "الهاتف: " + userPhone;
+
+            // 2. عرض الحجوزات
+            const bookingsContainer = document.getElementById("bookingsList");
+            const storedBookings = JSON.parse(localStorage.getItem("userBookings")) || [];
+
+            if (storedBookings.length === 0) {
+                bookingsContainer.innerHTML = `<div class="empty-state">لا توجد حجوزات نشطة حالياً.</div>`;
+            } else {
+                bookingsContainer.innerHTML = "";
+                storedBookings.forEach((item, index) => {
+                    bookingsContainer.innerHTML += `
+                        <div class="card-item">
+                            <div class="item-info">
+                                <h4>${item.title}</h4>
+                                <p>التاريخ: ${item.dateTime}</p>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:12px">
+                                <div class="status-badge">مؤكد</div>
+                                <button class="delete-btn" onclick="deleteItem('userBookings', ${index})">إلغاء الحجز</button>
+                            </div>
+                        </div>`;
+                });
+            }
+
+            // 3. عرض الطلبات
+            const ordersContainer = document.getElementById("ordersList");
+            const storedOrders = JSON.parse(localStorage.getItem("userOrders")) || [];
+
+            if (storedOrders.length === 0) {
+                ordersContainer.innerHTML = `<div class="empty-state">سجل المشتريات فارغ.</div>`;
+            } else {
+                ordersContainer.innerHTML = "";
+                storedOrders.forEach((order, index) => {
+                    ordersContainer.innerHTML += `
+                        <div class="card-item">
+                            <div class="item-info">
+                                <h4>طلب رقم #${order.id}</h4>
+                                <p>القيمة: ${order.total} ر.س | التاريخ: ${order.date || 'حديث'}</p>
+                            </div>
+                            <button class="delete-btn" onclick="deleteItem('userOrders', ${index})">حذف السجل</button>
+                        </div>`;
+                });
+            }
+        }
+
+        function deleteItem(key, index) {
+            if(confirm("هل تريد إزالة هذا العنصر من حسابك؟")) {
+                let data = JSON.parse(localStorage.getItem(key)) || [];
+                data.splice(index, 1);
+                localStorage.setItem(key, JSON.stringify(data));
+                renderPage();
+            }
+        }
+
+        function logout() {
+            if(confirm("هل تريد تسجيل الخروج؟")) {
+                localStorage.clear();
+                window.location.href = 'index.html'; 
+            }
+        }
+    </script>
+</body>
+</html>
